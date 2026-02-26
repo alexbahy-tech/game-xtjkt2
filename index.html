@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech-Talk Builder - Game Edukasi IT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+        }
+        .touch-target {
+            min-height: 60px;
+            transition: transform 0.2s ease;
+        }
+        .touch-target:active {
+            transform: scale(0.95);
+        }
+        .hidden-section { display: none; }
+        .gradient-text {
+            background: linear-gradient(90deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .drop-zone {
+            border: 2px dashed #334155;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="max-w-5xl mx-auto">
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-bold gradient-text mb-2">Tech-Talk Builder 🚀</h1>
+            <p class="text-slate-400">Interaktif Game untuk Belajar Grammar & Vocabulary IT</p>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <div class="flex flex-wrap justify-center gap-4 mb-8">
+            <button onclick="showSection('activityA')" class="nav-btn bg-blue-600 hover:bg-blue-500 px-6 py-3 rounded-full font-semibold transition">Activity A: Grammar</button>
+            <button onclick="showSection('activityB')" class="nav-btn bg-purple-600 hover:bg-purple-500 px-6 py-3 rounded-full font-semibold transition">Activity B: Vocab</button>
+            <button onclick="showSection('activityC')" class="nav-btn bg-emerald-600 hover:bg-emerald-500 px-6 py-3 rounded-full font-semibold transition">Activity C: Profile</button>
+        </div>
+
+        <!-- Activity A: Grammar Power -->
+        <section id="activityA" class="glass-card p-6 shadow-2xl">
+            <h2 class="text-2xl font-bold mb-4 flex items-center gap-2"><span>⚡</span> Tech Grammar Power!</h2>
+            <p class="mb-6 text-slate-300">Sentuh tombol untuk menyusun kalimat yang benar!</p>
+            
+            <div id="game-a-container" class="space-y-6">
+                <!-- Challenge 1 -->
+                <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-700">
+                    <p class="text-sm text-blue-400 mb-2 uppercase font-mono tracking-widest">Challenge: Positive Sentence (+)</p>
+                    <div class="flex flex-wrap gap-2 mb-4" id="pool-1">
+                        <button onclick="moveToZone(this, 'zone-1')" class="bg-slate-700 px-4 py-2 rounded-lg touch-target">WhatsApp</button>
+                        <button onclick="moveToZone(this, 'zone-1')" class="bg-slate-700 px-4 py-2 rounded-lg touch-target">I</button>
+                        <button onclick="moveToZone(this, 'zone-1')" class="bg-slate-700 px-4 py-2 rounded-lg touch-target">use</button>
+                        <button onclick="moveToZone(this, 'zone-1')" class="bg-slate-700 px-4 py-2 rounded-lg touch-target">every day</button>
+                    </div>
+                    <div class="drop-zone bg-slate-900/50 p-4 gap-2" id="zone-1"></div>
+                </div>
+
+                <!-- Challenge 2 -->
+                <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-700">
+                    <p class="text-sm text-red-400 mb-2 uppercase font-mono tracking-widest">Challenge: Negative Sentence (-)</p>
+                    <div class="flex flex-wrap gap-2 mb-4" id="pool-2">
+                        <button onclick="moveToZone(this, 'zone-2')" class="bg-slate-700 px-4 py-2 rounded-lg touch-target">don't</button>
+                        <button onclick="moveToZone(this, 'zone-2')" class="bg-slate-700 px-4 py-2 rounded-lg touch-target">I</button>
+                        <button onclick="moveToZone(this, 'zone-2')" class="bg-slate-700 px-4 py-2 rounded-lg touch-target">TikTok</button>
+                        <button onclick="moveToZone(this, 'zone-2')" class="bg-slate-700 px-4 py-2 rounded-lg touch-target">use</button>
+                    </div>
+                    <div class="drop-zone bg-slate-900/50 p-4 gap-2" id="zone-2"></div>
+                </div>
+
+                <div class="text-center">
+                    <button onclick="resetA()" class="text-slate-400 underline decoration-dotted">Reset Activity A</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Activity B: Expand Tech Words -->
+        <section id="activityB" class="hidden-section glass-card p-6 shadow-2xl">
+            <h2 class="text-2xl font-bold mb-4 flex items-center gap-2"><span>📖</span> Expand Your Tech Words!</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4" id="vocab-grid">
+                <!-- JS will inject flashcards here -->
+            </div>
+            
+            <div id="vocab-modal" class="fixed inset-0 bg-black/80 flex items-center justify-center p-4 hidden z-50">
+                <div class="bg-slate-800 p-8 rounded-3xl max-w-sm w-full text-center border border-purple-500 shadow-[0_0_30px_-5px_rgba(168,85,247,0.4)]">
+                    <div id="modal-emoji" class="text-7xl mb-4">💾</div>
+                    <h3 id="modal-word" class="text-3xl font-bold mb-1 uppercase tracking-tighter">PROGRAM</h3>
+                    <p id="modal-arti" class="text-purple-400 mb-6 italic">Program</p>
+                    <div class="text-left bg-slate-900 p-4 rounded-xl mb-6">
+                        <p class="text-xs text-slate-500 mb-1">Contoh Kalimat:</p>
+                        <p id="modal-example" class="text-sm">I have a new program on my laptop.</p>
+                    </div>
+                    <button onclick="closeModal()" class="w-full bg-purple-600 py-3 rounded-xl font-bold">CLOSE</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Activity C: Upgrade Profile -->
+        <section id="activityC" class="hidden-section glass-card p-6 shadow-2xl">
+            <h2 class="text-2xl font-bold mb-4 flex items-center gap-2"><span>🚀</span> Upgrade My Profile!</h2>
+            <div class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="space-y-3">
+                        <label class="block text-sm font-medium text-slate-400">Favorite App</label>
+                        <input type="text" id="fav-app" placeholder="e.g. Instagram" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-3">
+                        
+                        <label class="block text-sm font-medium text-slate-400">Want to learn</label>
+                        <select id="learn-tech" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-3">
+                            <option>Coding</option>
+                            <option>Networking</option>
+                            <option>Graphic Design</option>
+                            <option>Cyber Security</option>
+                        </select>
+                    </div>
+                    <div class="space-y-3">
+                        <label class="block text-sm font-medium text-slate-400">Dream Job</label>
+                        <input type="text" id="dream-job" placeholder="e.g. Programmer" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-3">
+                        
+                        <label class="block text-sm font-medium text-slate-400">Tech Hobby</label>
+                        <input type="text" id="tech-hobby" placeholder="e.g. building robots" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-3">
+                    </div>
+                </div>
+                
+                <button onclick="generateProfile()" class="w-full bg-emerald-600 hover:bg-emerald-500 py-4 rounded-xl font-bold text-xl transition shadow-lg mt-4">BUILD MY PROFILE</button>
+                
+                <div id="profile-result" class="hidden mt-6 bg-emerald-950/30 border border-emerald-500/50 p-6 rounded-2xl">
+                    <h4 class="text-emerald-400 font-bold mb-2 uppercase text-xs tracking-widest">Result:</h4>
+                    <div id="profile-text" class="text-lg leading-relaxed space-y-2"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Message Box -->
+        <div id="msg-box" class="fixed bottom-4 right-4 bg-slate-800 border border-slate-600 p-4 rounded-xl shadow-2xl hidden transform translate-y-20 transition-transform duration-300">
+            <p id="msg-content"></p>
+        </div>
+    </div>
+
+    <script>
+        // Data Activity B
+        const vocabData = [
+            { id: 1, word: 'Program', arti: 'Program', emoji: '💾', cat: 'Software' },
+            { id: 2, word: 'Music', arti: 'Musik', emoji: '🎵', cat: 'Software' },
+            { id: 3, word: 'Photo', arti: 'Foto', emoji: '📷', cat: 'Software' },
+            { id: 4, word: 'Mouse', arti: 'Tetikus', emoji: '🖱', cat: 'Hardware' },
+            { id: 5, word: 'Keyboard', arti: 'Papan ketik', emoji: '⌨', cat: 'Hardware' },
+            { id: 6, word: 'Screen', arti: 'Layar', emoji: '🖥', cat: 'Hardware' },
+            { id: 7, word: 'Speaker', arti: 'Pengeras suara', emoji: '🔊', cat: 'Hardware' },
+            { id: 8, word: 'Camera', arti: 'Kamera', emoji: '📷', cat: 'Hardware' },
+            { id: 9, word: 'Upload', arti: 'Mengunggah', emoji: '⬆', cat: 'Actions' },
+            { id: 10, word: 'Click', arti: 'Mengklik', emoji: '🖱', cat: 'Actions' },
+            { id: 11, word: 'Type', arti: 'Mengetik', emoji: '⌨', cat: 'Actions' },
+            { id: 12, word: 'Connect', arti: 'Menghubungkan', emoji: '🔗', cat: 'Actions' },
+            { id: 13, word: 'Search', arti: 'Mencari', emoji: '🔍', cat: 'Actions' },
+            { id: 14, word: 'Share', arti: 'Membagikan', emoji: '📤', cat: 'Actions' },
+            { id: 15, word: 'Save', arti: 'Menyimpan', emoji: '💾', cat: 'Actions' }
+        ];
+
+        // Navigation
+        function showSection(id) {
+            document.querySelectorAll('section').forEach(s => s.classList.add('hidden-section'));
+            document.getElementById(id).classList.remove('hidden-section');
+        }
+
+        // Activity A Logic
+        function moveToZone(btn, zoneId) {
+            const zone = document.getElementById(zoneId);
+            const originalParent = btn.parentElement;
+            
+            if (originalParent.id.startsWith('zone')) {
+                // Move back to pool
+                const poolId = 'pool-' + zoneId.split('-')[1];
+                document.getElementById(poolId).appendChild(btn);
+            } else {
+                // Move to zone
+                zone.appendChild(btn);
+            }
+            checkOrder(zoneId);
+        }
+
+        function checkOrder(zoneId) {
+            const zone = document.getElementById(zoneId);
+            const current = Array.from(zone.children).map(c => c.innerText).join(' ');
+            
+            const answers = {
+                'zone-1': 'I use WhatsApp every day',
+                'zone-2': "I don't use TikTok"
+            };
+
+            if (current === answers[zoneId]) {
+                zone.classList.remove('bg-slate-900/50');
+                zone.classList.add('bg-green-900/40', 'border-green-500');
+                showMessage("Great! Correct Sentence. 🌟");
+            } else {
+                zone.classList.add('bg-slate-900/50');
+                zone.classList.remove('bg-green-900/40', 'border-green-500');
+            }
+        }
+
+        function resetA() {
+            location.reload();
+        }
+
+        // Activity B Logic
+        function initVocab() {
+            const grid = document.getElementById('vocab-grid');
+            vocabData.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "bg-slate-800 p-4 rounded-xl text-center cursor-pointer hover:bg-slate-700 transition touch-target border border-slate-700";
+                card.innerHTML = `
+                    <div class="text-3xl mb-1">${item.emoji}</div>
+                    <div class="text-xs font-bold text-blue-400">${item.word}</div>
+                `;
+                card.onclick = () => openVocab(item);
+                grid.appendChild(card);
+            });
+        }
+
+        function openVocab(item) {
+            document.getElementById('modal-emoji').innerText = item.emoji;
+            document.getElementById('modal-word').innerText = item.word;
+            document.getElementById('modal-arti').innerText = item.arti;
+            
+            const examples = {
+                'Actions': `I want to ${item.word.toLowerCase()} my file now.`,
+                'Hardware': `I have a new ${item.word.toLowerCase()} for my PC.`,
+                'Software': `I use this ${item.word.toLowerCase()} program every day.`
+            };
+            
+            document.getElementById('modal-example').innerText = examples[item.cat] || `I like this ${item.word.toLowerCase()}.`;
+            document.getElementById('vocab-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('vocab-modal').classList.add('hidden');
+        }
+
+        // Activity C Logic
+        function generateProfile() {
+            const app = document.getElementById('fav-app').value || "____";
+            const learn = document.getElementById('learn-tech').value || "____";
+            const job = document.getElementById('dream-job').value || "____";
+            const hobby = document.getElementById('tech-hobby').value || "____";
+
+            const resultDiv = document.getElementById('profile-result');
+            const textDiv = document.getElementById('profile-text');
+            
+            resultDiv.classList.remove('hidden');
+            textDiv.innerHTML = `
+                <p>1. My favorite app is <b>${app}</b> because it is very useful.</p>
+                <p>2. I want to learn <b>${learn}</b> to upgrade my skills.</p>
+                <p>3. I dream to be a <b>${job}</b> in a big tech company.</p>
+                <p>4. I also like <b>${hobby}</b> in my free time.</p>
+            `;
+            
+            showMessage("Profile Updated! 🤖");
+        }
+
+        // Utils
+        function showMessage(txt) {
+            const box = document.getElementById('msg-box');
+            document.getElementById('msg-content').innerText = txt;
+            box.classList.remove('hidden');
+            box.classList.remove('translate-y-20');
+            setTimeout(() => {
+                box.classList.add('translate-y-20');
+                setTimeout(() => box.classList.add('hidden'), 300);
+            }, 2000);
+        }
+
+        window.onload = () => {
+            initVocab();
+        };
+    </script>
+</body>
+</html>
